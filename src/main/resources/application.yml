@@ -1,0 +1,5 @@
+bot:
+  BOT_TOKEN: 5932058087:AAFiznEBMumY1iEImC-YrF3Rov32X0R_4nQ
+  BOT_USERNAME: Dip1omatBot
+server:
+  PORT: 5000
