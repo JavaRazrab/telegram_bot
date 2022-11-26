@@ -1,9 +1,10 @@
-package com.echobot.telegram_bot;
+package com.echobot.telegram_bot.main;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -12,6 +13,10 @@ class Bot extends TelegramLongPollingBot {
 
     String BOT_TOKEN;
     String BOT_USERNAME;
+
+    @Autowired
+    @Qualifier("userRepository")
+    private UserRepository userRepository;
 
     UserRepo userRepo = new UserRepo();
 
@@ -37,23 +42,26 @@ class Bot extends TelegramLongPollingBot {
             message.setChatId(update.getMessage().getChatId().toString());
             //message.setReplyToMessageId(update.getMessage().getMessageId());
             User user;
-            if(!userRepo.haveUser(update.getMessage().getChatId().toString())){
+            if(userRepository.findByChatId(update.getMessage().getChatId().toString()) == null){
+            //if(!userRepo.haveUser(update.getMessage().getChatId().toString())){
                 user = new User(update.getMessage().getChatId().toString());
                 user.setStatus("changeName");
-                userRepo.addNewUser(user);
+                userRepository.save(user);
+                //userRepo.addNewUser(user);
                 message.setText("How can i call u?");
             }else{
-                user = userRepo.getUser(update.getMessage().getChatId().toString());
+                user = userRepository.findByChatId(update.getMessage().getChatId().toString());
                 switch (user.getStatus()){
                     case "changeName":
                         user.setName(update.getMessage().getText());
-                        message.setText("Got it, "+userRepo.getUser(update.getMessage().getChatId().toString()).getName());
+                        message.setText("Got it, "+user.getName());
                         user.setStatus("repeat");
                         break;
                     case "repeat":
-                        message.setText(userRepo.getUser(update.getMessage().getChatId().toString()).getName()+", "+update.getMessage().getText());
+                        message.setText(user.getName()+", "+update.getMessage().getText());
                         break;
                 }
+                userRepository.save(user);
             }
             try {
                 execute(message);

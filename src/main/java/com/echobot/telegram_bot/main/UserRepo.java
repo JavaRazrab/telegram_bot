@@ -1,6 +1,5 @@
-package com.echobot.telegram_bot;
+package com.echobot.telegram_bot.main;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
