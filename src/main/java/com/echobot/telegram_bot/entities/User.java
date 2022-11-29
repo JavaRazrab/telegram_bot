@@ -1,6 +1,6 @@
-package com.echobot.telegram_bot.main;
+package com.echobot.telegram_bot.entities;
 
-import com.echobot.telegram_bot.entities.Role;
+import com.echobot.telegram_bot.main.Status;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,14 +15,14 @@ public class User {
     private int id;
 
     @Column(name = "name")
-    private String name;
+    protected String name;
     @Column(name = "chatId")
-    private String chatId;
+    protected String chatId;
     @Column(name = "status")
-    private Status status;
+    protected Status status;
     @Column(name = "roleId")
-    private Role role;
-    private String surname;
+    protected Role role;
+    protected String surname;
 
     public User() {
 

@@ -8,19 +8,39 @@ import java.util.ArrayList;
 
 public class Keyboard extends ReplyKeyboardMarkup {
     public Keyboard(){
+        super();
     }
 
     public Keyboard(Status status){
+        super();
         this.setResizeKeyboard(true); //подгоняем размер
-        this.setOneTimeKeyboard(false); //скрываем после использования
+        this.setOneTimeKeyboard(true); //скрываем после использования
         //Создаем список с рядами кнопок
         ArrayList<KeyboardRow> keyboardRows = new ArrayList<>();
+
         switch (status){
             case MEETING:
                 break;
             case PEEK_CATEGORY:
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.get(0).add(new KeyboardButton("Математика"));
+                keyboardRows.get(0).add(new KeyboardButton("Программирование"));
+                keyboardRows.get(1).add(new KeyboardButton("Физика"));
+                keyboardRows.get(1).add(new KeyboardButton("Английский язык"));
                 break;
             case PEEK_COURSE:
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.get(0).add(new KeyboardButton("Школа"));
+                keyboardRows.get(1).add(new KeyboardButton("1ый курс"));
+                keyboardRows.get(1).add(new KeyboardButton("2ой курс"));
+                keyboardRows.get(2).add(new KeyboardButton("3ий курс"));
+                keyboardRows.get(2).add(new KeyboardButton("4ый курс"));
+                keyboardRows.get(3).add(new KeyboardButton("Магистратура"));
+                keyboardRows.get(3).add(new KeyboardButton("Аспирантура"));
                 break;
             case SENDING_WORK:
                 break;
@@ -29,16 +49,15 @@ public class Keyboard extends ReplyKeyboardMarkup {
             case WAITING_WORK_COMPLETE:
                 break;
             case WHO_ARE_U:
-                KeyboardRow keyboardRow1 = new KeyboardRow(), keyboardRow2 = new KeyboardRow();
-                keyboardRows.add(keyboardRow1);
-                keyboardRows.add(keyboardRow2);
-                keyboardRow1.add(new KeyboardButton("Хочу у вас работать"));
-                keyboardRow2.add(new KeyboardButton("Хочу заказать работу у специалиста"));
-                this.setKeyboard(keyboardRows);
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.add(new KeyboardRow());
+                keyboardRows.get(0).add(new KeyboardButton("Хочу у вас работать"));
+                keyboardRows.get(1).add(new KeyboardButton("Хочу заказать работу у специалиста"));
                 break;
             case SENDING_RESUME:
                 break;
         }
+        this.setKeyboard(keyboardRows);
     }
 
 }
