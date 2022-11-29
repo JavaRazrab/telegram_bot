@@ -19,10 +19,8 @@ public class User {
     @Column(name = "chatId")
     private String chatId;
     @Column(name = "status")
-    private String status;
+    private Status status;
     @Column(name = "roleId")
-    private int roleId;
-
     private Role role;
     private String surname;
 
@@ -39,6 +37,5 @@ public class User {
         name = user.name;
         surname = user.surname;
         role = user.role;
-        roleId = user.roleId;
     }
 }
